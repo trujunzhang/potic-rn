@@ -1,0 +1,10 @@
+{
+  "applications": {
+    "_default": {
+      "link": "deliveryapp"
+    },
+    "deliveryapp": {
+      "applicationId": "zU5955fjYoDbG1EC0wY9RUb8zZYDtbivvUGuWZMv"
+    }
+  }
+}
