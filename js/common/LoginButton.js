@@ -27,6 +27,7 @@ const React = require('react');
 const {StyleSheet} = require('react-native');
 const F8Button = require('F8Button');
 
+const {logInWithFacebook} = require('../actions').default
 const {connect} = require('react-redux');
 
 class LoginButton extends React.Component {
@@ -80,20 +81,21 @@ class LoginButton extends React.Component {
         const {dispatch, onLoggedIn} = this.props;
 
         this.setState({isLoading: true});
-        // try {
-        //     await Promise.race([
-        //         timeout(15000),
-        //     ]);
-        // } catch (e) {
-        //     const message = e.message || e;
-        //     if (message !== 'Timed out' && message !== 'Canceled by user') {
-        //         alert(message);
-        //         console.warn(e);
-        //     }
-        //     return;
-        // } finally {
-        //     this._isMounted && this.setState({isLoading: false});
-        // }
+        try {
+            await Promise.race([
+                dispatch(logInWithFacebook(this.props.source)),
+                timeout(15000),
+            ]);
+        } catch (e) {
+            const message = e.message || e;
+            if (message !== 'Timed out' && message !== 'Canceled by user') {
+                alert(message);
+                console.warn(e);
+            }
+            return;
+        } finally {
+            this._isMounted && this.setState({isLoading: false});
+        }
 
         onLoggedIn && onLoggedIn();
     }
