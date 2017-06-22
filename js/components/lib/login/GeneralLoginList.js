@@ -89,9 +89,7 @@ class GeneralLoginList extends Component {
         return (
             <View style={{flex: 1}}>
 
-                <View style={{backgroundColor: 'rgba(0, 0, 0, 0.44)', justifyContent: 'center', width, height}}>
-
-                    {this.renderBackArrowIcon()}
+                <View style={{backgroundColor: 'white', justifyContent: 'center', width, height}}>
 
                     <Telescope.components.HeaderLogo/>
 
