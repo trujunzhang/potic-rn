@@ -25,9 +25,6 @@ import {
 } from 'react-native'
 const {width, height} = Dimensions.get('window')
 
-
-import styles from './SignInStyles'
-
 var F8Button = require('F8Button');
 
 class GeneralLoginList extends Component {
@@ -36,8 +33,7 @@ class GeneralLoginList extends Component {
         super(props)
 
         this.state = this.initialState = {
-            formType: 'list',
-            roleType: 'client'
+            formType: 'signIn',
         }
     }
 
@@ -51,7 +47,6 @@ class GeneralLoginList extends Component {
 
     onButtonsHandler(obj) {
         this.props.actions.loginState()
-        this.setState({roleType: obj.tag})
         this.toggleForm('signIn')
     }
 
@@ -73,8 +68,7 @@ class GeneralLoginList extends Component {
     }
 
     renderForm() {
-        const {formType} = this.state
-        switch (formType) {
+        switch (this.state.formType) {
             default:
                 return (
                     <Telescope.components.AppLogin
@@ -82,10 +76,12 @@ class GeneralLoginList extends Component {
                         actions={this.props.actions}/>
                 )
             case 'signUp':
-                return <Telescope.components.AppRegister
-                    toggleEvent={this.toggleForm.bind(this)}
-                    actions={this.props.actions}
-                    roleType={this.state.roleType}/>
+                return (
+                    <Telescope.components.AppRegister
+                        toggleEvent={this.toggleForm.bind(this)}
+                        actions={this.props.actions}
+                        roleType={this.state.roleType}/>
+                )
             // case 'forgotPassword':
             //     return this.renderForgotPassword()
         }
@@ -93,7 +89,7 @@ class GeneralLoginList extends Component {
 
     render() {
         return (
-            <View style={styles.screneContainer}>
+            <View style={{flex: 1}}>
 
                 <View style={{backgroundColor: 'rgba(0, 0, 0, 0.44)', justifyContent: 'center', width, height}}>
 
@@ -133,4 +129,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(null, mapDispatchToProps)(GeneralLoginList)
-module.exports = connect(null, mapDispatchToProps)(GeneralLoginList);

@@ -46,8 +46,8 @@ class F8App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            // playground: true,
-            playground: false,
+            playground: true,
+            // playground: false,
         };
     }
 
