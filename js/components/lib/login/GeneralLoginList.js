@@ -91,12 +91,12 @@ class GeneralLoginList extends Component {
 
                 <View style={{backgroundColor: 'rgba(0, 0, 0, 0.44)', justifyContent: 'center', width, height}}>
 
-                    {/*{this.renderBackArrowIcon()}*/}
+                    {this.renderBackArrowIcon()}
 
-                    {/*<Telescope.components.HeaderLogo/>*/}
+                    <Telescope.components.HeaderLogo/>
 
                     <View style={{flex: 7}}>
-                        {/*{this.renderForm()}*/}
+                        {this.renderForm()}
                     </View>
 
                 </View>

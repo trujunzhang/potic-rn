@@ -116,4 +116,5 @@ var HeaderLogo = React.createClass({
     }
 })
 
-module.exports = HeaderLogo
+
+export default HeaderLogo
