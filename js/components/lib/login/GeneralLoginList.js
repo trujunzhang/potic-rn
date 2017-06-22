@@ -25,8 +25,6 @@ import {
 } from 'react-native'
 const {width, height} = Dimensions.get('window')
 
-var F8Button = require('F8Button');
-
 class GeneralLoginList extends Component {
 
     constructor(props, context) {
@@ -98,7 +96,7 @@ class GeneralLoginList extends Component {
                     <Telescope.components.HeaderLogo/>
 
                     <View style={{flex: 7}}>
-                        {this.renderForm()}
+                        {/*{this.renderForm()}*/}
                     </View>
 
                 </View>
