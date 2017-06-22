@@ -35,6 +35,8 @@ I18n.fallbacks = true
 import Translations from './lib/Translations'
 I18n.translations = Translations
 
+var FacebookSDK = require('FacebookSDK')
+
 var F8App = require('F8App');
 var Parse = require('parse/react-native');
 var React = require('React');
@@ -50,6 +52,8 @@ function setup(): ReactClass<{}> {
     Parse.initialize('CwsmGkrIp6SHBB7ERFVQatRwwNyOL7ep0L5DT7rb', 'QpOB4AmY1aPtAiX7tXlTSO4RUubMkysANzaD7lHf')
     Parse.serverURL = 'https://parseapi.back4app.com/'
 
+    FacebookSDK.init();
+    Parse.FacebookUtils.init();
 
     class Root extends React.Component {
         state: {
