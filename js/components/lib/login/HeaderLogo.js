@@ -41,7 +41,7 @@ import
 const FormButton = require('../../FormButton')
 
 
-import logoTitle from '../../../images/general/logo_title.png'
+import logoTitle from '../../../images/general/politicl-logo.png'
 
 var HeaderLogo = React.createClass({
     /**
