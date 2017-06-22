@@ -67,9 +67,9 @@ class F8App extends Component {
             // )
         }
 
-        // if (!this.props.isLoggedIn) {
-        //     return <LoginScreen />;
-        // }
+        if (!this.props.isLoggedIn) {
+            return <LoginScreen />;
+        }
 
         return (
             <View style={{flex: 1,}}>

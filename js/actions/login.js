@@ -28,9 +28,74 @@ const Parse = require('parse/react-native');
 const ActionSheetIOS = require('ActionSheetIOS');
 const {Platform} = require('react-native');
 const Alert = require('Alert');
+const FacebookSDK = require('FacebookSDK');
 
 import type {Action, ThunkAction} from './types';
 
+
+async function ParseFacebookLogin(scope): Promise {
+    return new Promise((resolve, reject) => {
+        Parse.FacebookUtils.logIn(scope, {
+            success: resolve,
+            error: (user, error) => reject(error && error.error || error),
+        });
+    });
+}
+
+async function queryFacebookAPI(path, ...args): Promise {
+    return new Promise((resolve, reject) => {
+        FacebookSDK.api(path, ...args, (response) => {
+            if (response && !response.error) {
+                resolve(response);
+            } else {
+                reject(response && response.error);
+            }
+        });
+    });
+}
+
+async function _logInWithFacebook(source: ?string): Promise<Array<Action>> {
+    await ParseFacebookLogin('public_profile,email,user_friends');
+    const profile = await queryFacebookAPI('/me', {fields: 'name,email'});
+
+    const user = await Parse.User.currentAsync();
+    user.set('facebook_id', profile.id);
+    user.set('name', profile.name);
+    user.set('email', profile.email);
+    await user.save();
+    await updateInstallation({user});
+
+    const action = {
+        type: 'LOGGED_IN',
+        source,
+        data: {
+            id: profile.id,
+            name: profile.name,
+            sharedSchedule: user.get('sharedSchedule'),
+        },
+    };
+
+    return Promise.all([
+        Promise.resolve(action),
+        restoreSchedule(),
+    ]);
+}
+
+function logInWithFacebook(source: ?string): ThunkAction {
+    return (dispatch) => {
+        const login = _logInWithFacebook(source);
+
+        // Loading friends schedules shouldn't block the login process
+        login.then(
+            (result) => {
+                dispatch(result);
+                dispatch(loadFriendsSchedules());
+                dispatch(loadSurveys());
+            }
+        );
+        return login;
+    };
+}
 
 async function _logInWithPassword(username: string, password: string): Promise<Array<Action>> {
     const user = new Parse.User();
@@ -185,4 +250,4 @@ function logOutWithPrompt(): ThunkAction {
     };
 }
 
-module.exports = {logInWithPassword, signUpWithPassword, skipLogin, logOut, logOutWithPrompt};
+module.exports = {logInWithFacebook,logInWithPassword, signUpWithPassword, skipLogin, logOut, logOutWithPrompt};
