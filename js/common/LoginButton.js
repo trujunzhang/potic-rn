@@ -27,7 +27,7 @@ const React = require('react');
 const {StyleSheet} = require('react-native');
 const F8Button = require('F8Button');
 
-const {logInWithFacebook} = require('../actions').default
+const {logInWithFacebook,logInWithPassword} = require('../actions').default
 const {connect} = require('react-redux');
 
 class LoginButton extends React.Component {
@@ -80,6 +80,7 @@ class LoginButton extends React.Component {
     async logIn() {
         const {dispatch, onLoggedIn} = this.props;
 
+        debugger
         this.setState({isLoading: true});
         try {
             await Promise.race([

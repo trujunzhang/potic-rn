@@ -2,6 +2,15 @@
 
 import Telescope from './config'
 
+// Login
+Telescope.registerComponent('AppLogin',                require('./login/AppLogin.js').default)
+Telescope.registerComponent('AppRegistry',             require('./login/AppRegister.js').default)
+Telescope.registerComponent('GeneralLoginList',        require('./login/GeneralLoginList.js').default)
+Telescope.registerComponent('HeaderLogo',              require('./login/HeaderLogo.js').default)
+Telescope.registerComponent('LoginForm',               require('./login/LoginForm.js').default)
+Telescope.registerComponent('LoginRender',             require('./login/LoginRender.js').default)
+
+
 // posts
 Telescope.registerComponent('PostsDomain',                require('./posts/PostsDomain.js').default)
 Telescope.registerComponent('PostsHome',                  require('./posts/PostsHome.js').default)

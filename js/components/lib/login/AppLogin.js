@@ -5,19 +5,16 @@
  *
  */
 'use strict'
+
+import Telescope from '../index'
+
 /**
  * ## Imports
  *
  * Redux
  */
-import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 
-
-/**
- *   LoginRender
- */
-import LoginRender from './LoginRender'
 
 /**
  * The necessary React components
@@ -28,68 +25,67 @@ import React from 'react'
  * ### Translations
  */
 var I18n = require('react-native-i18n')
-import Translations from '../lib/Translations'
+import Translations from '../../../lib/Translations'
 I18n.translations = Translations
 
 const {
     LOGIN,
     REGISTER,
     FORGOT_PASSWORD
-} = require('../lib/constants').default
+} = require('../../../lib/constants').default
 
+const {logInWithPassword} = require('../../../actions');
 
-const {signUpWithPassword} = require('../actions');
+class AppLogin extends React.Component {
+    props: {
+        style: any;
+        dispatch: (action: any) => Promise;
+        onLoggedIn: ?() => void;
+    };
 
-class AppRegistry extends React.Component {
     async onButtonPress() {
         const {dispatch} = this.props;
 
         let username = this.props.auth.form.fields.username;
-        let email = this.props.auth.form.fields.email;
         let password = this.props.auth.form.fields.password;
-        let roleType = this.props.roleType;
 
-        this.props.actions.signupRequest();
+        this.props.actions.loginRequest();
 
         try {
             await Promise.race([
-                dispatch(signUpWithPassword(username, email, password, roleType)),
+                dispatch(logInWithPassword(username, password)),
                 timeout(15000),
             ]);
         } catch (e) {
-            this.props.actions.signupFailure(e);
+            this.props.actions.loginFailure(e);
             const message = e.message || e;
             if (message !== 'Timed out' && message !== 'Canceled by user') {
                 // alert(message);
                 // console.warn(e);
             }
-            return;
         } finally {
-            this.props.actions.signupSuccess();
+            this.props.actions.loginSuccess();
             this._isMounted && this.setState({isLoading: false});
         }
     }
 
     render() {
-        let buttonText = I18n.t('Register.register')
-
-        // console.log("roleType: " + this.props.roleType);
+        let buttonText = I18n.t('Login.login');
 
         return (
-            <LoginRender
-                formType={REGISTER}
+            <Telescope.components.LoginRender
+                formType={LOGIN}
                 loginButtonText={buttonText}
                 onButtonPress={this.onButtonPress.bind(this)}
+                leftMessageType={REGISTER}
+                rightMessageType={FORGOT_PASSWORD}
                 displayPasswordCheckbox
-                leftMessageType={FORGOT_PASSWORD}
-                rightMessageType={LOGIN}
                 auth={this.props.auth}
                 toggleEvent={this.props.toggleEvent}
             />
         )
     }
 }
-
 
 async function timeout(ms: number): Promise {
     return new Promise((resolve, reject) => {
@@ -103,7 +99,5 @@ function select(store) {
     };
 }
 
-
-export default connect(select)(AppRegistry)
-module.exports = connect(select)(AppRegistry);
+export default connect(select)(AppLogin)
 

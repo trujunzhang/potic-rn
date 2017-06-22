@@ -74,7 +74,8 @@ class WebComponents extends React.Component {
                 {/*<Telescope.components.PostsNoResults />*/}
                 {/*<Telescope.components.PostsListTitle title={"xxx"} showClose={true}/>*/}
                 {/*<Telescope.components.PostsItem post={post} type="save"/>*/}
-                <Telescope.components.PostsHome />
+                {/*<Telescope.components.PostsHome />*/}
+                <Telescope.components.GeneralLoginList />
             </View>
         )
     }

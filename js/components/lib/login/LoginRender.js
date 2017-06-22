@@ -6,23 +6,21 @@
  */
 'use strict'
 
+import Telescope from '../index'
+
 /**
  * The ErrorAlert displays an alert for both ios & android
  */
-import ErrorAlert from '../components/ErrorAlert'
+import ErrorAlert from '../../../components/ErrorAlert'
 /**
  * The FormButton will change it's text between the 4 states as necessary
  */
-import FormButton from '../components/FormButton'
-/**
- *  The LoginForm does the heavy lifting of displaying the fields for
- * textinput and displays the error messages
- */
-import LoginForm from './LoginForm'
+import FormButton from '../../../components/FormButton'
+
 /**
  * The itemCheckbox will toggle the display of the password fields
  */
-import ItemCheckbox from '../components/ItemCheckbox'
+import ItemCheckbox from '../../../components/ItemCheckbox'
 
 /**
  * The necessary React components
@@ -45,7 +43,7 @@ var {height, width} = Dimensions.get('window') // Screen dimensions in current o
  * ### Translations
  */
 var I18n = require('react-native-i18n')
-import Translations from '../lib/Translations'
+import Translations from '../../../lib/Translations'
 I18n.translations = Translations
 
 /**
@@ -55,7 +53,7 @@ const {
     LOGIN,
     REGISTER,
     FORGOT_PASSWORD
-} = require('../lib/constants').default
+} = require('../../../lib/constants').default
 
 /**
  * ## Styles
@@ -233,7 +231,7 @@ class LoginRender extends Component {
         return (
             <View>
                 <View style={styles.inputs}>
-                    <LoginForm
+                    <Telescope.components.LoginForm
                         formType={formType}
                         form={this.props.auth.form}
                         value={this.state.value}
@@ -266,7 +264,7 @@ class LoginRender extends Component {
 import {bindActionCreators} from 'redux'
 import {connect} from 'react-redux'
 
-import * as authActions from '../reducers/auth/authActions'
+import * as authActions from '../../../reducers/auth/authActions'
 
 function mapDispatchToProps(dispatch) {
     return {
@@ -275,4 +273,3 @@ function mapDispatchToProps(dispatch) {
 }
 
 export default connect(null, mapDispatchToProps)(LoginRender)
-module.exports = connect(null, mapDispatchToProps)(LoginRender)

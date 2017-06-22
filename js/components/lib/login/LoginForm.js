@@ -7,6 +7,9 @@
  *
  */
 'use strict'
+
+import Telescope from '../index'
+
 /**
  * ## Import
  *
@@ -18,7 +21,7 @@ import React, {PropTypes} from 'react'
  * ### Translations
  */
 var I18n = require('react-native-i18n')
-import Translations from '../lib/Translations'
+import Translations from '../../../lib/Translations'
 I18n.translations = Translations
 
 /**
@@ -28,12 +31,12 @@ const {
     REGISTER,
     LOGIN,
     FORGOT_PASSWORD
-} = require('../lib/constants').default
+} = require('../../../lib/constants').default
 
 /**
  *  The fantastic little form library
  */
-const t = require('../vendor/tcomb-form-native/index')
+const t = require('../../../vendor/tcomb-form-native/index')
 let Form = t.form.Form
 
 
@@ -174,4 +177,5 @@ var LoginForm = React.createClass({
     }
 })
 
-module.exports = LoginForm
+
+export default LoginForm

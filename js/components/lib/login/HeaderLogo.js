@@ -38,10 +38,10 @@ import
 /**
  * Project component that will respond to onPress
  */
-const FormButton = require('./FormButton')
+const FormButton = require('../../FormButton')
 
 
-import logoTitle from '../images/general/logo_title.png'
+import logoTitle from '../../../images/general/logo_title.png'
 
 var HeaderLogo = React.createClass({
     /**
