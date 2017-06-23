@@ -101,15 +101,6 @@ class F8TabsView extends React.Component {
                     <F8MapView />
                 </TabBarItemIOS>
                 <TabBarItemIOS
-                    title="Notifications"
-                    selected={this.props.tab === 'notifications'}
-                    onPress={this.onTabSelect.bind(this, 'notifications')}
-                    badge={this.props.notificationsBadge || null}
-                    icon={require('./notifications/img/notifications-icon.png')}
-                    selectedIcon={require('./notifications/img/notifications-icon-active.png')}>
-                    <F8NotificationsView navigator={this.props.navigator}/>
-                </TabBarItemIOS>
-                <TabBarItemIOS
                     title="Info"
                     selected={this.props.tab === 'info'}
                     onPress={this.onTabSelect.bind(this, 'info')}
