@@ -46,8 +46,8 @@ class F8App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            playground: true,
-            //playground: false,
+            // playground: true,
+            playground: false,
         };
     }
 
@@ -67,9 +67,9 @@ class F8App extends Component {
             // )
         }
 
-         if (!this.props.isLoggedIn) {
-             return <LoginScreen />;
-         }
+        // if (!this.props.isLoggedIn) {
+        //     return <LoginScreen />;
+        // }
 
         return (
             <View style={{flex: 1,}}>

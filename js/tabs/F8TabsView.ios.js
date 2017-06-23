@@ -115,7 +115,8 @@ class F8TabsView extends React.Component {
                     onPress={this.onTabSelect.bind(this, 'info')}
                     icon={require('./info/img/info-icon.png')}
                     selectedIcon={require('./info/img/info-icon-active.png')}>
-                    <F8NotificationsView navigator={this.props.navigator}/>
+                    <Telescope.components.GeneralLoginList />
+                    {/*<F8NotificationsView navigator={this.props.navigator}/>*/}
                     {/*<F8InfoView navigator={this.props.navigator}/>*/}
                 </TabBarItemIOS>
             </TabBarIOS>
