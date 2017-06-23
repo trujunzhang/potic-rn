@@ -49,13 +49,13 @@ class AppLogin extends React.Component {
         let username = this.props.auth.form.fields.username;
         let password = this.props.auth.form.fields.password;
 
-        this.props.actions.loginRequest();
+        // this.props.actions.loginRequest();
 
         debugger
 
         try {
             await Promise.race([
-                dispatch(logInWithPassword(username, password)),
+                this.props.dispatch(logInWithPassword(username, password)),
                 timeout(15000),
             ]);
         } catch (e) {
