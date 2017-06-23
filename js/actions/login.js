@@ -29,6 +29,50 @@
 // ========================
 const FacebookSDK = require('FacebookSDK');
 
+function logOut(): ThunkAction {
+    return (dispatch) => {
+        Parse.User.logOut();
+        // updateInstallation({user: null, channels: []});
+
+        // TODO: Make sure reducers clear their state
+        return dispatch({
+            type: 'LOGGED_OUT',
+        });
+    };
+}
+
+
+function logOutWithPrompt(): ThunkAction {
+    return (dispatch, getState) => {
+        let name = getState().user.name || 'there';
+
+        if (Platform.OS === 'ios') {
+            ActionSheetIOS.showActionSheetWithOptions(
+                {
+                    title: `Hi, ${name}`,
+                    options: ['Log out', 'Cancel'],
+                    destructiveButtonIndex: 0,
+                    cancelButtonIndex: 1,
+                },
+                (buttonIndex) => {
+                    if (buttonIndex === 0) {
+                        dispatch(logOut());
+                    }
+                }
+            );
+        } else {
+            Alert.alert(
+                `Hi, ${name}`,
+                'Log out from F8?',
+                [
+                    {text: 'Cancel'},
+                    {text: 'Log out', onPress: () => dispatch(logOut())},
+                ]
+            );
+        }
+    };
+}
+
 async function queryFacebookAPI(path, ...args): Promise {
     return new Promise((resolve, reject) => {
         FacebookSDK.api(path, ...args, (response) => {
@@ -248,49 +292,6 @@ function signUpWithPassword(username: string, email: string, password: string, r
 function skipLogin(): Action {
     return {
         type: 'SKIPPED_LOGIN',
-    };
-}
-
-function logOut(): ThunkAction {
-    return (dispatch) => {
-        Parse.User.logOut();
-        // updateInstallation({user: null, channels: []});
-
-        // TODO: Make sure reducers clear their state
-        return dispatch({
-            type: 'LOGGED_OUT',
-        });
-    };
-}
-
-function logOutWithPrompt(): ThunkAction {
-    return (dispatch, getState) => {
-        let name = getState().user.name || 'there';
-
-        if (Platform.OS === 'ios') {
-            ActionSheetIOS.showActionSheetWithOptions(
-                {
-                    title: `Hi, ${name}`,
-                    options: ['Log out', 'Cancel'],
-                    destructiveButtonIndex: 0,
-                    cancelButtonIndex: 1,
-                },
-                (buttonIndex) => {
-                    if (buttonIndex === 0) {
-                        dispatch(logOut());
-                    }
-                }
-            );
-        } else {
-            Alert.alert(
-                `Hi, ${name}`,
-                'Log out from F8?',
-                [
-                    {text: 'Cancel'},
-                    {text: 'Log out', onPress: () => dispatch(logOut())},
-                ]
-            );
-        }
     };
 }
 
