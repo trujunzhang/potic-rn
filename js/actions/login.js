@@ -98,6 +98,8 @@ function logInWithFacebook(source: ?string): ThunkAction {
 }
 
 async function _logInWithPassword(username: string, password: string): Promise<Array<Action>> {
+    debugger
+
     const user = new Parse.User();
     user.set('username', username);
     user.set('password', password);
@@ -250,8 +252,10 @@ function logOutWithPrompt(): ThunkAction {
     };
 }
 
-export default  {
-    logInWithFacebook, logInWithPassword,
-    signUpWithPassword,
-    skipLogin, logOut, logOutWithPrompt
+
+export default {
+    signUpWithPassword, logInWithFacebook, logInWithTwitter,
+    logInWithPassword,
+    skipLogin, logOut,
+    newUserFolderWithPost
 }

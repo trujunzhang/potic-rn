@@ -3,6 +3,16 @@ export type Cloudinary = {
     url: string;
 }
 
+
+export type User = {
+    id: string,
+    name: string,
+    loginType: string,
+    email: string,
+    slug: string,
+    defaultFolderId: string
+}
+
 export type Topic = {
     id: string;
     name: string;
@@ -10,6 +20,17 @@ export type Topic = {
     status: string;
     isIgnore: boolean;
     active: boolean;
+}
+
+
+export type Folder = {
+    id: string;
+    name: string;
+    description: string;
+    slug: string;
+    status: string;
+    visible: string;
+    posts: Any;
 }
 
 export type Post = {
@@ -26,6 +47,18 @@ export type Post = {
     postedAt: Date;
 };
 
+
+export function fromParseUser(map: Object): User {
+    return {
+        id: map.id,
+        name: map.get('username'),
+        loginType: map.get('loginType'),
+        email: map.get('email'),
+        defaultFolderId: fromParseFolder(map.get('folders')[0]).id,
+        folders: (map.get('folders') || []).map(fromParseFolder)
+    };
+}
+
 export function fromParseTopic(map: Object): Topic {
     return {
         id: map.id,
@@ -34,6 +67,18 @@ export function fromParseTopic(map: Object): Topic {
         status: map.get('status'),
         isIgnore: map.get('isIgnore'),
         active: map.get('active')
+    };
+}
+
+export function fromParseFolder(map: Object): Folder {
+    return {
+        id: map.id,
+        name: map.get('name'),
+        description: map.get('description'),
+        slug: map.get('slug'),
+        status: map.get('status'),
+        visible: map.get('visible'),
+        posts: (map.get('posts') || []).map(fromParsePost)
     };
 }
 
