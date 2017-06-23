@@ -24,23 +24,10 @@
 
 'use strict';
 
-const Parse = require('parse/react-native');
-const ActionSheetIOS = require('ActionSheetIOS');
-const {Platform} = require('react-native');
-const Alert = require('Alert');
+// ========================
+// For Mobile Apps
+// ========================
 const FacebookSDK = require('FacebookSDK');
-
-import type {Action, ThunkAction} from './types';
-
-
-async function ParseFacebookLogin(scope): Promise {
-    return new Promise((resolve, reject) => {
-        Parse.FacebookUtils.logIn(scope, {
-            success: resolve,
-            error: (user, error) => reject(error && error.error || error),
-        });
-    });
-}
 
 async function queryFacebookAPI(path, ...args): Promise {
     return new Promise((resolve, reject) => {
@@ -50,6 +37,61 @@ async function queryFacebookAPI(path, ...args): Promise {
             } else {
                 reject(response && response.error);
             }
+        });
+    });
+}
+
+
+/**
+ * The states were interested in
+ */
+const {
+    LOGGED_IN,
+    LOGGED_OUT,
+    SET_SHARING,
+    LOADED_USER_FOLDERS,
+    SELECTED_USER_FOLDER,
+    ADDED_NEW_FOLDER_WITH_POST
+} = require('../lib/constants').default
+
+
+let {Folder, Post} = require('./objects').default
+
+const {fromParseUser} = require('../reducers/parseModels')
+
+
+const Parse = require('parse/react-native');
+const ActionSheetIOS = require('ActionSheetIOS');
+const {Platform} = require('react-native');
+const Alert = require('Alert');
+
+import type {Action, ThunkAction} from './types';
+
+
+function getUserCallback(user) {
+    return fromParseUser(user)
+}
+
+
+async function makeNewFolderForUser(user: Any, foldName: string = 'Read Later', postId: string = null): Promise {
+    let data = {
+        'name': foldName,
+        'visible': (foldName === 'Read Later') ? 'Lock' : '',
+        'user': user,
+        posts: []
+    }
+    if (!!postId) {
+        data['posts'] = [Post.createWithoutData(postId)]
+    }
+    return await new Folder(data).save()
+}
+
+
+async function ParseFacebookLogin(scope): Promise {
+    return new Promise((resolve, reject) => {
+        Parse.FacebookUtils.logIn(scope, {
+            success: resolve,
+            error: (user, error) => reject(error && error.error || error),
         });
     });
 }
