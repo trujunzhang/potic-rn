@@ -25,7 +25,7 @@
 'use strict';
 
 const parseActions = require('./parse').default
-const loginActions = require('./login').default
+const loginActions = require('./login')
 // const voingtActions = require('./voting').default
 const shipmentActions = require('./shipment').default
 const golbalActions = require('./global').default

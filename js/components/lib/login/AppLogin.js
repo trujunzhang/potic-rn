@@ -51,6 +51,8 @@ class AppLogin extends React.Component {
 
         this.props.actions.loginRequest();
 
+debugger
+
         try {
             await Promise.race([
                 dispatch(logInWithPassword(username, password)),

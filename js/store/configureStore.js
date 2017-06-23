@@ -48,7 +48,11 @@ var createF8Store = applyMiddleware(thunk, promise, array, analytics, logger)(cr
 function configureStore(onComplete: ?() => void) {
     // TODO(frantic): reconsider usage of redux-persist, maybe add cache breaker
     const store = autoRehydrate()(createF8Store)(reducers);
-    persistStore(store, {whitelist: ['user'], storage: AsyncStorage}, onComplete);
+    persistStore(store,
+                 {
+                     //whitelist: ['user'],
+                     storage: AsyncStorage
+                 }, onComplete);
     if (isDebuggingInChrome) {
         window.store = store;
     }

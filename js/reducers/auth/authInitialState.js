@@ -25,7 +25,7 @@ const {
 const Form = Record({
   state: REGISTER,
   disabled: false,
-  error: null,
+  error: '',
   isValid: false,
   isFetching: false,
   fields: new (Record({

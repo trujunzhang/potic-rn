@@ -33,6 +33,8 @@ class GeneralLoginList extends Component {
         this.state = this.initialState = {
             formType: 'signIn',
         }
+
+        props.actions.loginState()
     }
 
     toggleForm(formType) {
