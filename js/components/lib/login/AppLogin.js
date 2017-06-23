@@ -44,30 +44,37 @@ class AppLogin extends React.Component {
     };
 
     async onButtonPress() {
-        const {dispatch} = this.props;
+        const {dispatch} = this.props
 
-        let username = this.props.auth.form.fields.username;
-        let password = this.props.auth.form.fields.password;
+        let username = this.props.auth.form.fields.username
+        let password = this.props.auth.form.fields.password
 
-        // this.props.actions.loginRequest();
+        this.setState({errorMessage: null})
+        var errorMessage = null
 
-        debugger
+        this.props.actions.loginRequest()
 
         try {
             await Promise.race([
-                this.props.dispatch(logInWithPassword(username, password)),
+                dispatch(logInWithPassword(username, password)),
                 timeout(15000),
-            ]);
+            ])
         } catch (e) {
-            this.props.actions.loginFailure(e);
-            const message = e.message || e;
+            this.props.actions.loginFailure(e)
+            const message = e.message || e
             if (message !== 'Timed out' && message !== 'Canceled by user') {
+                errorMessage = message
                 // alert(message);
                 // console.warn(e);
             }
         } finally {
-            this.props.actions.loginSuccess();
-            this._isMounted && this.setState({isLoading: false});
+
+            if (!!errorMessage) {
+                this.setState({errorMessage: errorMessage})
+            } else {
+                this.props.dispatch(dismissPopModel())
+                this.props.actions.loginSuccess()
+            }
         }
     }
 

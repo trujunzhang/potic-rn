@@ -103,7 +103,7 @@ const {
     ADDED_NEW_FOLDER_WITH_POST
 } = require('../lib/constants').default
 
-const Parse = require('parse')
+const Parse = require('parse/react-native')
 // const FacebookSDK = require('FacebookSDK')
 const {updateInstallation} = require('./installation')
 
