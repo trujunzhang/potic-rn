@@ -51,7 +51,7 @@ class AppLogin extends React.Component {
 
         this.props.actions.loginRequest();
 
-debugger
+        debugger
 
         try {
             await Promise.race([

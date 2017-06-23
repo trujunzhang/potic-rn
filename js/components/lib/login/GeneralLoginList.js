@@ -70,9 +70,11 @@ class GeneralLoginList extends Component {
     renderForm() {
         switch (this.state.formType) {
             default:
+                debugger
                 return (
                     <Telescope.components.AppLogin
                         toggleEvent={this.toggleForm.bind(this)}
+                        dispatch={this.props.dispatch}
                         actions={this.props.actions}/>
                 )
             case 'signUp':

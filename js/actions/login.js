@@ -250,4 +250,8 @@ function logOutWithPrompt(): ThunkAction {
     };
 }
 
-module.exports = {logInWithFacebook, logInWithPassword, signUpWithPassword, skipLogin, logOut, logOutWithPrompt};
+export default  {
+    logInWithFacebook, logInWithPassword,
+    signUpWithPassword,
+    skipLogin, logOut, logOutWithPrompt
+}
